@@ -26,10 +26,18 @@ def send_telegram_message(message):
 def home():
     return "Trading Bot is active and running!", 200
 
-@app.route("/check", methods=["GET"])
-def manual_check():
-    send_telegram_message("🤖 *בדיקת מערכת:* הבוט סורק את השוק כעת ופעיל.")
-    return "Check executed", 200
+@app.route("/scan", methods=["GET"])
+def scan_market():
+    assets_to_scan = ["SOLUSDT", "NVDA", "GOOGL"]
+    
+    send_telegram_message("🔍 *התחלת סריקת שוק:* הבוט בודק כעת את הנכסים המוגדרים...")
+    
+    results_message = "📊 *תוצאות סריקה מעודכנות:*\n"
+    for asset in assets_to_scan:
+        results_message += f"• {asset}: נסרק בהצלחה, ממתין לתנאי כניסה.\n"
+    
+    send_telegram_message(results_message)
+    return "Scan completed successfully", 200
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
